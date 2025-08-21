@@ -4,9 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
   </head>
   <body>
-    <header>Library</header>
+    <header>
+      <h2 class="title">Library</h2>
+      <button type="button" id="new-book">+ Add book</button>
+    </header>
     <main></main>
     <footer class="footer">
       <p>
@@ -18,5 +23,31 @@
         <a href="https://github.com/Faizulmd13" target="_blank"> Faizulmd13 </a>
       </p>
     </footer>
+    <div class="new-book-info">
+      <h1>Add new book</h1>
+      <input
+        type="text"
+        class="title"
+        placeholder="Title"
+        required
+        maxlength="100"
+      />
+      <input
+        type="text"
+        class="author"
+        placeholder="Author"
+        required
+        maxlength="100"
+      />
+      <input
+        type="number"
+        class="pages"
+        placeholder="Pages"
+        required
+        max="10000"
+      />
+      <p>Have you read it? <input type="checkbox" required /></p>
+      <button type="submit">Submit</button>
+    </div>
   </body>
 </html>
