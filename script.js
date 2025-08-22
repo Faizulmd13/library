@@ -65,6 +65,7 @@ function generateCard(container) {
       statusButton.classList.toggle("btn-light-green", book.status);
       statusButton.classList.toggle("btn-light-red", !book.status);
       statusButton.textContent = book.status ? "Read" : "Not Read";
+      saveLibrary();
     });
     buttonContainer.appendChild(statusButton);
 
@@ -75,6 +76,7 @@ function generateCard(container) {
       const index = myLibrary.findIndex((b) => b.id === book.id);
       if (index !== -1) {
         myLibrary.splice(index, 1);
+        saveLibrary();
         bookCard.remove();
       }
     });
@@ -95,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const booksContainer = document.querySelector(".books-container");
   const form = document.querySelector(".new-book-form");
 
+  loadLibrary();
   generateCard(booksContainer);
 
   submitButton.addEventListener("click", (e) => {
@@ -107,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (title && author && pages) {
       addBookToLibrary(title, author, pages, status);
+      saveLibrary();
       generateCard(booksContainer);
 
       form.reset();
