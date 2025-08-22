@@ -1,3 +1,19 @@
+function saveLibrary() {
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+}
+
+function loadLibrary() {
+  const stored = localStorage.getItem("myLibrary");
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    parsed.forEach((book) => {
+      myLibrary.push(
+        new Book(book.title, book.author, book.pages, book.status, book.id)
+      );
+    });
+  }
+}
+
 const myLibrary = [];
 
 function Book(title, author, pages, status) {
