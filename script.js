@@ -9,19 +9,19 @@ function Book(title, author, pages, status) {
 }
 
 function addBookToLibrary(title, author, pages, status) {
-  const myBook = Book(title, author, pages, status);
+  const myBook = new Book(title, author, pages, status);
   myLibrary.push(myBook);
 }
 
 function generateCard(container) {
-  container.innerHTML = ""; // Clear old cards before regenerating
+  container.innerHTML = "";
 
   myLibrary.forEach((book) => {
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
 
     const bookTitle = document.createElement("h2");
-    bookTitle.textContent = book.title;
+    bookTitle.textContent = `"${book.title}"`;
     bookCard.appendChild(bookTitle);
 
     const bookAuthor = document.createElement("h2");
@@ -32,31 +32,33 @@ function generateCard(container) {
     bookPages.textContent = `${book.pages} pages`;
     bookCard.appendChild(bookPages);
 
-    // Status button
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("button-group");
+
     const statusButton = document.createElement("button");
     statusButton.classList.add("status-btn");
     if (book.status === true) {
-      statusButton.classList.add("read");
+      statusButton.classList.add("btn-light-green");
       statusButton.textContent = "Read";
     } else {
-      statusButton.classList.add("not-read");
+      statusButton.classList.add("btn-light-red");
       statusButton.textContent = "Not Read";
     }
 
     statusButton.addEventListener("click", function () {
-      if (statusButton.classList.contains("read")) {
-        statusButton.classList.remove("read");
-        statusButton.classList.add("not-read");
+      if (statusButton.classList.contains("btn-light-green")) {
+        statusButton.classList.remove("btn-light-green");
+        statusButton.classList.add("btn-light-red");
         statusButton.textContent = "Not Read";
-        book.status = false; // update data too!
+        book.status = false;
       } else {
-        statusButton.classList.remove("not-read");
-        statusButton.classList.add("read");
+        statusButton.classList.remove("btn-light-red");
+        statusButton.classList.add("btn-light-green");
         statusButton.textContent = "Read";
         book.status = true; // update data too!
       }
     });
-    bookCard.appendChild(statusButton);
+    buttonContainer.appendChild(statusButton);
 
     // Remove button
     const removeBtn = document.createElement("button");
@@ -70,7 +72,9 @@ function generateCard(container) {
         bookCard.remove(); // also remove from DOM
       }
     });
-    bookCard.appendChild(removeBtn);
+    buttonContainer.appendChild(removeBtn);
+
+    bookCard.appendChild(buttonContainer);
 
     container.appendChild(bookCard);
   });
