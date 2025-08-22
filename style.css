@@ -1,3 +1,7 @@
+/* === Fonts === */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/* === Color Vars === */
 :root {
   --white: #fffbfb;
   --grey: #f0eef1;
@@ -5,16 +9,9 @@
   --red: #ff7070;
   --light-green: #9fff9c;
   --light-red: #ff9c9c;
-  --border-radius: 8px;
-  --spacing-xs: 5px;
-  --spacing-sm: 10px;
-  --spacing-md: 15px;
-  --spacing-lg: 20px;
-  --spacing-xl: 40px;
-  --container-width: 1200px;
-  --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+/* === Global === */
 *,
 *::before,
 *::after {
@@ -23,70 +20,203 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--grey);
   color: var(--black);
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
   font-size: 18px;
   font-weight: 500;
   word-wrap: break-word;
   margin-bottom: 100px;
+  line-height: 1.4;
 }
 
+button,
+input {
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px dashed var(--black);
+  outline-offset: 2px;
+}
+
+input[type="text"],
+input[type="number"] {
+  cursor: text;
+}
+
+/* === Header === */
 header {
-  padding: 1rem 2rem;
+  padding: 16px 24px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: var(--white);
-  box-shadow: var(--shadow);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+#new-book {
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: var(--black);
+  color: var(--white);
+  transition: filter 0.15s ease-in-out, transform 0.06s ease-in-out;
+}
+
+#new-book:hover {
+  filter: brightness(92%);
+}
+#new-book:active {
+  transform: translateY(1px);
+}
+
+/* === Main === */
 main {
   flex: 1;
-  padding: 2rem;
+  margin: 24px 0;
+  text-align: center;
+  padding: 0 24px;
 }
 
-footer {
-  padding: 1rem 2rem;
+/* === Books Container === */
+.books-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 32px;
+  margin-top: 32px;
+}
+
+/* === Book Card === */
+.book-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: var(--white);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  line-height: 1.25;
   text-align: center;
 }
 
+/* Button group inside card */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* === Buttons (generic) === */
+.btn {
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: filter 0.15s ease-in-out, transform 0.06s ease-in-out;
+}
+
+.btn:hover {
+  filter: brightness(92%);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-light-green {
+  background-color: var(--light-green);
+}
+.btn-light-red {
+  background-color: var(--light-red);
+}
+
+/* === Footer === */
+footer {
+  padding: 16px 24px;
+  text-align: center;
+}
+
+footer a {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: #111;
+  font-weight: 500;
+}
+
+footer a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #0077ff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+footer a:hover::after {
+  transform: scaleX(1);
+}
+
+/* === New Book Modal === */
 .new-book-info {
   display: none;
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 1;
-  width: 300px;
-  padding: var(--spacing-lg);
-  border-radius: var(--border-radius);
+  z-index: 1001;
+  width: 320px;
+  padding: 16px;
+  border-radius: 8px;
   background-color: var(--grey);
   text-align: center;
-  transform: translate(-50%, -50%) scale(0);
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
   transition: 0.2s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 16px;
 }
 
 .new-book-info.active {
-  transform: translate(-50%, -50%) scale(1);
   display: block;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
 }
 
 .new-book-form {
   display: grid;
-  gap: 1rem;
+  gap: 12px;
 }
 
 .new-book-form input,
 .new-book-form button {
   width: 100%;
   padding: 12px;
-  border: none;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-.new-book-form #status {
+.new-book-form input {
+  background-color: var(--white);
+  box-shadow: rgba(0, 0, 0, 0.08) 0 1px 2px inset;
+}
+
+.new-book-form .status {
   max-width: fit-content;
   margin-left: 12px;
 }
@@ -94,16 +224,68 @@ footer {
 .new-book-form button {
   background-color: var(--light-green);
 }
+
+/* === Overlay === */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   display: none;
-  width: 100%;
-  height: 100%;
+  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
 }
 
 .overlay.active {
   display: block;
+  opacity: 1;
+}
+
+/* === Mobile (<= 600px) === */
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+  }
+
+  header {
+    padding: 12px 16px;
+  }
+  #new-book {
+    padding: 10px 14px;
+    border-radius: 8px;
+  }
+
+  main {
+    margin: 16px 0;
+    padding: 0 16px;
+  }
+
+  .books-container {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .book-card {
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .button-group {
+    gap: 12px;
+  }
+
+  .btn {
+    padding: 10px 14px;
+  }
+
+  footer {
+    padding: 12px 16px;
+  }
+
+  .new-book-info {
+    width: 90%;
+    max-width: 360px;
+    padding: 14px;
+  }
 }
