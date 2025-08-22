@@ -14,9 +14,64 @@ function addBookToLibrary(title, author, pages, status) {
 }
 
 function generateCard(container) {
+  container.innerHTML = ""; // Clear old cards before regenerating
+
   myLibrary.forEach((book) => {
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
+
+    const bookTitle = document.createElement("h2");
+    bookTitle.textContent = book.title;
+    bookCard.appendChild(bookTitle);
+
+    const bookAuthor = document.createElement("h2");
+    bookAuthor.textContent = book.author;
+    bookCard.appendChild(bookAuthor);
+
+    const bookPages = document.createElement("h2");
+    bookPages.textContent = `${book.pages} pages`;
+    bookCard.appendChild(bookPages);
+
+    // Status button
+    const statusButton = document.createElement("button");
+    statusButton.classList.add("status-btn");
+    if (book.status === true) {
+      statusButton.classList.add("read");
+      statusButton.textContent = "Read";
+    } else {
+      statusButton.classList.add("not-read");
+      statusButton.textContent = "Not Read";
+    }
+
+    statusButton.addEventListener("click", function () {
+      if (statusButton.classList.contains("read")) {
+        statusButton.classList.remove("read");
+        statusButton.classList.add("not-read");
+        statusButton.textContent = "Not Read";
+        book.status = false; // update data too!
+      } else {
+        statusButton.classList.remove("not-read");
+        statusButton.classList.add("read");
+        statusButton.textContent = "Read";
+        book.status = true; // update data too!
+      }
+    });
+    bookCard.appendChild(statusButton);
+
+    // Remove button
+    const removeBtn = document.createElement("button");
+    removeBtn.classList.add("remove-btn");
+    removeBtn.textContent = "Remove";
+    removeBtn.addEventListener("click", function () {
+      const toDelete = book.id;
+      const index = myLibrary.findIndex((b) => b.id === toDelete);
+      if (index !== -1) {
+        myLibrary.splice(index, 1);
+        bookCard.remove(); // also remove from DOM
+      }
+    });
+    bookCard.appendChild(removeBtn);
+
     container.appendChild(bookCard);
   });
 }
