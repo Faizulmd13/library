@@ -1,22 +1,42 @@
 const myLibrary = [];
 
-function Book() {
-  // the constructor...
+function Book(title, author, pages, status) {
+  this.id = crypto.randomUUID();
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.status = status;
 }
 
-function addBookToLibrary() {
-  // take params, create a book then store it in the array
+function addBookToLibrary(title, author, pages, status) {
+  const myBook = Book(title, author, pages, status);
+  myLibrary.push(myBook);
 }
+
+function generateCard(container) {
+  myLibrary.forEach((book) => {
+    const bookCard = document.createElement("div");
+    bookCard.classList.add("book-card");
+    container.appendChild(bookCard);
+  });
+}
+
+addBookToLibrary("My life", "Me", 69, true);
 
 document.addEventListener("DOMContentLoaded", () => {
   const addNewBook = document.querySelector("#new-book");
-  const inputForm = document.querySelector(".new-book-info");
+  const inputFormDiv = document.querySelector(".new-book-info");
   const submitButton = document.querySelector("#submit-btn");
+  const overlay = document.querySelector(".overlay");
+  const booksContainer = document.querySelector(".books-container");
+  generateCard(booksContainer);
 
   submitButton.addEventListener("click", function () {
-    inputForm.classList.toggle("active");
+    inputFormDiv.classList.toggle("active");
+    overlay.classList.toggle("active");
   });
   addNewBook.addEventListener("click", function () {
-    inputForm.classList.toggle("active");
+    inputFormDiv.classList.toggle("active");
+    overlay.classList.toggle("active");
   });
 });

@@ -12,7 +12,7 @@
       <h2 class="title">Library</h2>
       <button type="button" id="new-book">+ Add book</button>
     </header>
-    <main></main>
+    <main class="books-container"></main>
     <footer class="footer">
       <p>
         Copyright ©
@@ -23,31 +23,34 @@
         <a href="https://github.com/Faizulmd13" target="_blank"> Faizulmd13 </a>
       </p>
     </footer>
+    <div class="overlay"></div>
     <div class="new-book-info">
-      <h1>Add new book</h1>
-      <input
-        type="text"
-        class="title"
-        placeholder="Title"
-        required
-        maxlength="100"
-      />
-      <input
-        type="text"
-        class="author"
-        placeholder="Author"
-        required
-        maxlength="100"
-      />
-      <input
-        type="number"
-        class="pages"
-        placeholder="Pages"
-        required
-        max="10000"
-      />
-      <p>Have you read it? <input type="checkbox" required /></p>
-      <button type="submit">Submit</button>
+      <form class="new-book-form">
+        <h1>Add new book</h1>
+        <input
+          type="text"
+          class="title"
+          placeholder="Title"
+          required
+          maxlength="100"
+        />
+        <input
+          type="text"
+          class="author"
+          placeholder="Author"
+          required
+          maxlength="100"
+        />
+        <input
+          type="number"
+          class="pages"
+          placeholder="Pages"
+          required
+          max="10000"
+        />
+        <p>Have you read it? <input type="checkbox" required id="status" /></p>
+        <button type="button" id="submit-btn">Submit</button>
+      </form>
     </div>
   </body>
 </html>
