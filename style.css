@@ -9,7 +9,6 @@
   --red: #ff7070;
   --light-green: #9fff9c;
   --light-red: #ff9c9c;
-  color-scheme: light;
 }
 
 /* === Global === */
@@ -244,6 +243,10 @@ footer a:hover::after {
 
 /* === Mobile (<= 600px) === */
 @media (max-width: 600px) {
+  :root {
+  color-scheme: light;
+  }
+
   body {
     font-size: 16px;
   }
