@@ -9,6 +9,8 @@
   --red: #ff7070;
   --light-green: #9fff9c;
   --light-red: #ff9c9c;
+
+  color-scheme: light
 }
 
 /* === Global === */
@@ -18,6 +20,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html, body {
+  background-color: var(--white);
+  color: var(--black);
+  color-scheme: light;
 }
 
 html {
