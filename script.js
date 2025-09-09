@@ -1,20 +1,53 @@
 // ====== Data Handling ======
-const myLibrary = [];
 
 class Book {
-  constructor (title, author, pages, status) {
-    this.id = crypto.randomUUID();
+  constructor (title, author, pages, status, id = crypto.randomUUID()) {
+    this.id = id;
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.status = status;
   }
 
-  toggleStatus() {
+  toggleStatus(){
     this.status = !this.status;
   }
-  
 }
+
+class Library {
+  constructor() {
+    this.books = [];
+  }
+
+  addBook(book){
+    this.books.push(book);
+    this.save();
+  }
+
+  removeBook(id){
+    this.books = this.books.filter(b => b.id !== id);
+    this.save();
+  }
+
+  save(){
+    localStorage.setItem("myLibrary", JSON.stringify(this.books));
+  }
+
+  load(){
+    this.books = [];
+    const stored = localStorage.getItem("myLibrary");
+    if (stored) {
+      JSON.parse(stored).forEach((book) => {
+        this.books.push(
+          new Book(book.title, book.author, book.pages, book.status, book.id)
+        );
+      });
+    }
+  }
+}
+
+// const myLibrary = [];
+
 // function Book(title, author, pages, status) {
 //   this.id = crypto.randomUUID();
 //   this.title = title;
@@ -23,32 +56,32 @@ class Book {
 //   this.status = status;
 // }
 
-function addBookToLibrary(title, author, pages, status) {
-  const myBook = new Book(title, author, pages, status);
-  myLibrary.push(myBook);
-}
+// function addBookToLibrary(title, author, pages, status) {
+//   const myBook = new Book(title, author, pages, status);
+//   myLibrary.push(myBook);
+// }
 
-function saveLibrary() {
-  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
-}
+// function saveLibrary() {
+//   localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+// }
 
-function loadLibrary() {
-  const stored = localStorage.getItem("myLibrary");
-  if (stored) {
-    const parsed = JSON.parse(stored);
-    parsed.forEach((book) => {
-      myLibrary.push(
-        new Book(book.title, book.author, book.pages, book.status, book.id)
-      );
-    });
-  }
-}
+// function loadLibrary() {
+//   const stored = localStorage.getItem("myLibrary");
+//   if (stored) {
+//     const parsed = JSON.parse(stored);
+//     parsed.forEach((book) => {
+//       myLibrary.push(
+//         new Book(book.title, book.author, book.pages, book.status, book.id)
+//       );
+//     });
+//   }
+// }
 
 // ====== UI Rendering ======
-function generateCard(container) {
+function generateCard(container, library) {
   container.innerHTML = "";
 
-  myLibrary.forEach((book) => {
+  library.books.forEach((book) => {
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
 
@@ -77,9 +110,9 @@ function generateCard(container) {
     updateStatusButton(statusButton, book);
 
     statusButton.addEventListener("click", () => {
-      book.status = !book.status;
+      book.toggleStatus();
       updateStatusButton(statusButton, book);
-      saveLibrary();
+      library.save();
     });
     buttonContainer.appendChild(statusButton);
 
@@ -88,12 +121,8 @@ function generateCard(container) {
     removeBtn.classList.add("btn");
     removeBtn.textContent = "Remove";
     removeBtn.addEventListener("click", () => {
-      const index = myLibrary.findIndex((b) => b.id === book.id);
-      if (index !== -1) {
-        myLibrary.splice(index, 1);
-        saveLibrary();
-        generateCard(container);
-      }
+      library.removeBook(book.id);
+      generateCard(container, library);
     });
     buttonContainer.appendChild(removeBtn);
 
@@ -117,9 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const booksContainer = document.querySelector(".books-container");
   const form = document.querySelector(".new-book-form");
 
-  // Load existing books
-  loadLibrary();
-  generateCard(booksContainer);
+  // Create library and load existing books
+  const library = new Library();
+  library.load();
+  generateCard(booksContainer, library)
 
   // Add book form submit
   submitButton.addEventListener("click", (e) => {
@@ -131,9 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const status = form.querySelector(".status").checked;
 
     if (title && author && pages) {
-      addBookToLibrary(title, author, pages, status);
-      saveLibrary();
-      generateCard(booksContainer);
+      const newBook = new Book(title, author, pages, status);
+      library.addBook(newBook);
+      generateCard(booksContainer, library);
 
       form.reset();
       inputFormDiv.classList.remove("active");
