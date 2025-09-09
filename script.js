@@ -1,13 +1,27 @@
 // ====== Data Handling ======
 const myLibrary = [];
 
-function Book(title, author, pages, status) {
-  this.id = crypto.randomUUID();
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.status = status;
+class Book {
+  constructor (title, author, pages, status) {
+    this.id = crypto.randomUUID();
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.status = status;
+  }
+
+  toggleStatus() {
+    this.status = !this.status;
+  }
+  
 }
+// function Book(title, author, pages, status) {
+//   this.id = crypto.randomUUID();
+//   this.title = title;
+//   this.author = author;
+//   this.pages = pages;
+//   this.status = status;
+// }
 
 function addBookToLibrary(title, author, pages, status) {
   const myBook = new Book(title, author, pages, status);
