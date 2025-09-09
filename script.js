@@ -46,37 +46,6 @@ class Library {
   }
 }
 
-// const myLibrary = [];
-
-// function Book(title, author, pages, status) {
-//   this.id = crypto.randomUUID();
-//   this.title = title;
-//   this.author = author;
-//   this.pages = pages;
-//   this.status = status;
-// }
-
-// function addBookToLibrary(title, author, pages, status) {
-//   const myBook = new Book(title, author, pages, status);
-//   myLibrary.push(myBook);
-// }
-
-// function saveLibrary() {
-//   localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
-// }
-
-// function loadLibrary() {
-//   const stored = localStorage.getItem("myLibrary");
-//   if (stored) {
-//     const parsed = JSON.parse(stored);
-//     parsed.forEach((book) => {
-//       myLibrary.push(
-//         new Book(book.title, book.author, book.pages, book.status, book.id)
-//       );
-//     });
-//   }
-// }
-
 // ====== UI Rendering ======
 function generateCard(container, library) {
   container.innerHTML = "";
